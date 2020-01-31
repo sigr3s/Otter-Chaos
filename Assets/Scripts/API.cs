@@ -7,8 +7,17 @@ public class API : MonoBehaviour {
     public string baseUrl;
 
 
+
+    [Header("Debug")]
+    public DataFrame joinDataFrame;
+    public DataFrame debugDataFrame;
+    public bool sendJoin = false;
+    public bool sendDebug = false;
+
+
     void Awake()
     {
+        instance = this;
         if(PlayerPrefs.HasKey("TwitchChannel")){
             channelID = PlayerPrefs.GetString("TwitchChannel");
         }
@@ -21,7 +30,17 @@ public class API : MonoBehaviour {
 
     public void GetFrame(int lastTimestamp, Action<DataFrame> OnSuccess){
 
-        
+        if(sendDebug){
+            DataFrame df = debugDataFrame;
+            sendDebug = false;
+            OnSuccess(df);
+        }
+
+        if(sendJoin){
+            DataFrame df = joinDataFrame;
+            sendJoin = false;
+            OnSuccess(df);
+        }
     }
 
     public void EndGame(){

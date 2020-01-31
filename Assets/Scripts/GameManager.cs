@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public Commands commands;
     public GameStatus gameStatus;
-    public Dictionary<string, TwitchPlayer> players;
+    public Dictionary<string, TwitchPlayer> players = new Dictionary<string, TwitchPlayer>();
 
 
     [Header("Scene references")]
     public List<FactoryLine> factoryLines;
+
+    [Space(10)]
     public TwitchPlayer playerPrefab;
 
     [Header("Game Settings")]
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
+        currentRound = 1;
         API.instance.StartGame();
         StartCoroutine(JoinPhase(OnJoinPhaseCompleted));
     }
@@ -65,7 +68,9 @@ public class GameManager : MonoBehaviour
         List<int> sequence = new List<int>();
 
         for(int i = 0; i < lineFrames; i++){
-            sequence.Add(UnityEngine.Random.Range(0, commands.actions.Count));
+            int sn = UnityEngine.Random.Range(0, commands.actions.Count);
+            sequence.Add(sn);
+            Debug.Log("Sequence number " +  i  +  " :   " + sn );
         }
 
         return sequence;
@@ -73,18 +78,29 @@ public class GameManager : MonoBehaviour
 #region GamePhases
     private IEnumerator JoinPhase(System.Action JoinPhaseCompleted)
     {
+        Debug.Log("Start Join Phase!");
         yield return new WaitForSeconds(joinPhaseDuration);
         JoinPhaseCompleted();
     }
 
     private IEnumerator PreRound(System.Action OnPreRoundComplete)
     {
-
-        yield return null;
+        Debug.Log("Start pre round");
+        yield return new WaitForSeconds(3);
         OnPreRoundComplete();
     }
 
     private IEnumerator PostRound(Action OnPostRoundComplete){
+        Debug.Log("Start post round");
+
+        yield return new WaitForSeconds(3);
+
+        OnPostRoundComplete();
+    }
+
+    private IEnumerator EndGame(){
+        Debug.Log("End game!");
+
         yield return null;
     }
 
@@ -120,11 +136,15 @@ public class GameManager : MonoBehaviour
 
     private void OnJoinPhaseCompleted()
     {
-        gameStatus = GameStatus.PreRound;
-        StartCoroutine(PreRound( ()=>{} ));
+        if(players.Count > 1){
+            gameStatus = GameStatus.PreRound;
+            StartCoroutine(PreRound(OnPreRoundComplete));
+        }
+        else{
+            StartCoroutine(JoinPhase(OnJoinPhaseCompleted));
+        }
 
     }
-
 
     private void OnPreRoundComplete(){
         gameStatus = GameStatus.Round;
@@ -134,28 +154,46 @@ public class GameManager : MonoBehaviour
         foreach(FactoryLine fl in factoryLines){
             fl.StartLine(sequence, OnRoundComplete);
         }
+
+        Debug.Log("Start round");
+
     }
 
     private void OnRoundComplete(FactoryLine winner)
     {
+        Debug.Log("Round complete");
+
         winner.wins ++;
+
+        int first = 0;
+        int second = 0;
 
         foreach(FactoryLine fl in factoryLines){
             fl.StopLine();
 
-            if(fl != winner){
-
+            if(fl.wins > first){
+                second = first;
+                first = fl.wins;
+            }
+            else if(fl.wins > second){
+                second = fl.wins;
             }
         }
 
+        if( (first - second) > (rounds - currentRound)){
+            gameStatus = GameStatus.EndGame;
+            StartCoroutine(EndGame());
 
-
-        StartCoroutine(PostRound(OnPostRoundComplete));
+        }
+        else{
+            gameStatus = GameStatus.PostRound;
+            StartCoroutine(PostRound(OnPostRoundComplete));
+        }
     }
 
     private void OnPostRoundComplete(){
-        Debug.Log("Round complete");
+        currentRound ++;
+        StartCoroutine(PreRound(OnPreRoundComplete));
     }
     #endregion
 }
-

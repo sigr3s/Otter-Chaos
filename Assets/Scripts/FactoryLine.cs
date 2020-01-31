@@ -48,7 +48,14 @@ public class FactoryLine : MonoBehaviour {
 
     public TwitchPlayer SpawnPlayer(TwitchPlayer playerPrefab)
     {
-        TwitchPlayer player = Instantiate(playerPrefab);
+        TwitchPlayer player = Instantiate(playerPrefab, playerSlots[playerCount].position, Quaternion.identity);
+        playerCount++;
         return player;
+    }
+
+
+    [ContextMenu("Win")]
+    public void Win(){
+        OnComplete(this);
     }
 }

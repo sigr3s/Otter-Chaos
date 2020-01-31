@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: Commands
   m_EditorClassIdentifier: 
   join: 
-  actions: []
+  actions:
+  - actionName: 
+    image: {fileID: 0}
+  - actionName: 
+    image: {fileID: 0}
+  - actionName: 
+    image: {fileID: 0}
+  - actionName: 
+    image: {fileID: 0}
