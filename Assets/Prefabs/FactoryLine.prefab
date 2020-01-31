@@ -44,14 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f0bdd71de304120a2b43161808a4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sequence: 
-  running: 0
-  playerCount: 0
-  wins: 0
+  frameTime: 10
   playerSlots:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  resultMode: 0
+  running: 0
+  sequence: 
+  result: 
+  wins: 0
+  playerCount: 0
+  players: []
+  currentTime: 0
+  currentFrame: 0
 --- !u!1 &626305192815685353
 GameObject:
   m_ObjectHideFlags: 0

@@ -64,17 +64,18 @@ public class GameManager : MonoBehaviour
         return line;
     }
 
-    private List<int> GenerateSequence(){
-        List<int> sequence = new List<int>();
+    private int[] GenerateSequence(){
+        int[] sequence = new int[lineFrames];
 
         for(int i = 0; i < lineFrames; i++){
             int sn = UnityEngine.Random.Range(0, commands.actions.Count);
-            sequence.Add(sn);
+            sequence[i] = sn;
             Debug.Log("Sequence number " +  i  +  " :   " + sn );
         }
 
         return sequence;
     }
+
 #region GamePhases
     private IEnumerator JoinPhase(System.Action JoinPhaseCompleted)
     {
@@ -149,10 +150,10 @@ public class GameManager : MonoBehaviour
     private void OnPreRoundComplete(){
         gameStatus = GameStatus.Round;
 
-        List<int> sequence = GenerateSequence();
+        int[] sequence = GenerateSequence();
 
         foreach(FactoryLine fl in factoryLines){
-            fl.StartLine(sequence, OnRoundComplete);
+            fl.StartLine(sequence, OnRoundComplete, commands);
         }
 
         Debug.Log("Start round");
@@ -195,5 +196,6 @@ public class GameManager : MonoBehaviour
         currentRound ++;
         StartCoroutine(PreRound(OnPreRoundComplete));
     }
+    
     #endregion
 }
