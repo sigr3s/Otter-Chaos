@@ -1711,7 +1711,9 @@ MonoBehaviour:
     timestamp: 0
   debugDataFrame:
     joined: []
-    actions: []
+    actions:
+    - playerID: sigr3s
+      command: 0
     timestamp: 0
   sendJoin: 0
   sendDebug: 0
@@ -1734,7 +1736,7 @@ MonoBehaviour:
   - {fileID: 548742885}
   playerPrefab: {fileID: 1664499724952630815, guid: 951f4a139a67a9c46b9f48b9cf7f1d33,
     type: 3}
-  joinPhaseDuration: 20
+  joinPhaseDuration: 5
   rounds: 3
   lineFrames: 3
   secondsBetweenRequests: 2
