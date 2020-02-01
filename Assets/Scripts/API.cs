@@ -115,7 +115,7 @@ public class API : MonoBehaviour {
     }
 
     private IEnumerator StartGameSession(string jsonData, Action<GameSession> callback, Action error){
-        using (UnityWebRequest www = UnityWebRequest.Post(baseUrl + "/game/start", jsonData))
+        using (UnityWebRequest www = UnityWebRequest.Put(baseUrl + "/game", jsonData))
         {
             www.SetRequestHeader("Content-Type", "application/json");
 
@@ -123,6 +123,7 @@ public class API : MonoBehaviour {
 
             if (www.isNetworkError || www.isHttpError)
             {
+                Debug.Log(www.url);
                 Debug.Log(www.error);
                 error.Invoke();
             }
@@ -135,7 +136,8 @@ public class API : MonoBehaviour {
         }
     }
 
-    public void GetFrame(int lastTimestamp, Action<DataFrame> OnSuccess){
+    public void GetFrame(Action<DataFrame> OnSuccess){
+        /*
         if(!string.IsNullOrEmpty(gameSession.session_id)){
             StartCoroutine(SendRequest<DataFrame>("/game/" + gameSession.session_id, OnSuccess, () =>{
                 //TODO: Handle this
@@ -143,8 +145,10 @@ public class API : MonoBehaviour {
         }
         else{
             //Debug.LogWarning("Session not started")
-        }
+        }*/
+    }
 
+    public void GetLocalFrame(Action<DataFrame> OnSuccess){
         if(debugDataFrame.commands != null && debugDataFrame.commands.Count > 0){
             DataFrame df = debugDataFrame;
             debugDataFrame = new DataFrame();
