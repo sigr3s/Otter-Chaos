@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Scene references")]
     public List<FactoryLine> factoryLines;
+    public GameObject messageBox = null;
+    public GameObject endGameBox = null;
+    public Image winnerColorImage = null;
+    public Text messageText = null;
+    public Text timerText = null;
 
     [Space(10)]
     public TwitchPlayer playerPrefab;
@@ -38,6 +44,8 @@ public class GameManager : MonoBehaviour
     private void Start() {
         currentRound = 1;
         API.instance.StartGame(commands);
+        messageBox.SetActive(false);
+        endGameBox.SetActive(false);
         StartCoroutine(JoinPhase(OnJoinPhaseCompleted));
     }
 
@@ -81,7 +89,15 @@ public class GameManager : MonoBehaviour
     private IEnumerator JoinPhase(System.Action JoinPhaseCompleted)
     {
         Debug.Log("Start Join Phase!");
-        yield return new WaitForSeconds(joinPhaseDuration);
+        messageText.text = "Get ready! Type '/join' in the chat.";
+        timerText.text = (int)joinPhaseDuration+"";
+        messageBox.SetActive(true);
+        for (int i = (int)joinPhaseDuration; i >= 0; i--)
+        {
+            timerText.text = i+"";
+            yield return new WaitForSeconds(1.0f);
+        }
+        messageBox.SetActive(false);
         JoinPhaseCompleted();
     }
 
@@ -100,11 +116,12 @@ public class GameManager : MonoBehaviour
         OnPostRoundComplete();
     }
 
-    private IEnumerator EndGame(){
+    private IEnumerator EndGame(FactoryLine factory){
         Debug.Log("End game!");
-
+        winnerColorImage.color = factory.color;
+        endGameBox.SetActive(true);
         yield return new WaitForSeconds(10f);
-
+        endGameBox.SetActive(false);
         SceneManager.LoadScene(0);
     }
 
@@ -181,10 +198,12 @@ public class GameManager : MonoBehaviour
         int first = 0;
         int second = 0;
 
+        FactoryLine currentWinner = null;
         foreach(FactoryLine fl in factoryLines){
             fl.StopLine();
 
             if(fl.wins > first){
+                currentWinner = fl;
                 second = first;
                 first = fl.wins;
             }
@@ -198,7 +217,7 @@ public class GameManager : MonoBehaviour
 
         if( (first - second) > (rounds - currentRound)){
             gameStatus = GameStatus.EndGame;
-            StartCoroutine(EndGame());
+            StartCoroutine(EndGame(currentWinner));
 
         }
         else{
