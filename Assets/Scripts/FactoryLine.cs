@@ -4,9 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FactoryLine : MonoBehaviour {
+
+    [Header("ID")]
+    public string name;
+    public Color color;
+
+    [Header("Config")]
     public float animationSpeed = 0.5f;
     public List<Transform> playerSlots;
     public List<CommandDisplay> displays;
+
+    [Space(20)]
+
+    [Header("Lights")]
+    public List<GameObject> lights;
+    public Color correct;
+    public Color incorrect;
+    public Color missplaced;
+    public Color disabled;
+
+    [Space(20)]
+
     [SerializeField] Animator animator = default;
     public ResultMode resultMode = ResultMode.Democracy;
     public Text scoreText = null;
@@ -28,6 +46,13 @@ public class FactoryLine : MonoBehaviour {
     static class AnimatorHash
     {
         public static readonly int Move = Animator.StringToHash("move");
+    }
+
+    private void Awake() {
+        foreach(GameObject l in lights){
+            Material m = l.GetComponent<MeshRenderer>().material;
+            m.color = disabled;
+        }
     }
 
     public void StartLine(int[] sequence, Action<FactoryLine> OnComplete, Commands commands){

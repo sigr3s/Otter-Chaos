@@ -56,8 +56,17 @@ MonoBehaviour:
   - {fileID: 5016701950400356832}
   - {fileID: 8456820154773026580}
   - {fileID: 369682222034415740}
+  lights:
+  - {fileID: 7107350702440732409}
+  - {fileID: 7107350703497321785}
+  - {fileID: 7107350702068920395}
+  correct: {r: 0.27461123, g: 1, b: 0, a: 1}
+  incorrect: {r: 0.8018868, g: 0.06430225, b: 0.06430225, a: 1}
+  missplaced: {r: 1, g: 0.7330102, b: 0, a: 1}
+  disabled: {r: 0.5471698, g: 0.53426486, b: 0.53426486, a: 1}
   animator: {fileID: 3193737878918613644}
   resultMode: 0
+  scoreText: {fileID: 0}
   running: 0
   sequence: 
   result: 
@@ -462,6 +471,24 @@ PrefabInstance:
 --- !u!4 &7107350703484958640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7626665926237781742, guid: 2ea259b5c0add45179d9a0d99bbca13f,
+    type: 3}
+  m_PrefabInstance: {fileID: 825633788912306526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7107350702440732409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7626665927273602983, guid: 2ea259b5c0add45179d9a0d99bbca13f,
+    type: 3}
+  m_PrefabInstance: {fileID: 825633788912306526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7107350703497321785 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7626665926183162983, guid: 2ea259b5c0add45179d9a0d99bbca13f,
+    type: 3}
+  m_PrefabInstance: {fileID: 825633788912306526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7107350702068920395 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7626665927620000021, guid: 2ea259b5c0add45179d9a0d99bbca13f,
     type: 3}
   m_PrefabInstance: {fileID: 825633788912306526}
   m_PrefabAsset: {fileID: 0}
