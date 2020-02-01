@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("End game!");
         winnerColorImage.color = factory.color;
         endGameBox.SetActive(true);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         endGameBox.SetActive(false);
         SceneManager.LoadScene(0);
     }
@@ -232,8 +232,10 @@ public class GameManager : MonoBehaviour
 
         int[] sequence = GenerateSequence();
 
+        int propIndex = UnityEngine.Random.Range(0, 3);
+
         foreach(FactoryLine fl in factoryLines){
-            fl.StartLine(sequence, OnRoundComplete, commands);
+            fl.StartLine(sequence, OnRoundComplete, commands, propIndex);
         }
 
         Debug.Log("Start round");
