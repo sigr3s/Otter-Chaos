@@ -20,6 +20,11 @@ public class TitleScreenManager : MonoBehaviour
 
     public void OnStartButtonPressed()
     {
-        SceneManager.LoadScene("MainGame");
+        Invoke("LoadSceneGame", 2.2f);
+    }
+
+    public void LoadSceneGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }
