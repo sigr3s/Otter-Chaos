@@ -56,8 +56,10 @@ public class GameManager : MonoBehaviour
         if(secondsSinceLastRequest > secondsBetweenRequests){
             secondsSinceLastRequest = 0f;
 
-            API.instance.GetFrame(lastTimestamp, ProcessFrame);
+            API.instance.GetFrame(ProcessFrame);
+            API.instance.GetLocalFrame(ProcessFrame);
         }
+
     }
 
     public FactoryLine GetLineForNewUser(){
