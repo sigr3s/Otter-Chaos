@@ -174,6 +174,10 @@ public class FactoryLine : MonoBehaviour {
             animator.speed = 0;
             Win();
         }
+        else
+        {
+            SoundManager.instance.PlayeError();
+        }
     }
 
     [ContextMenu("Win")]
