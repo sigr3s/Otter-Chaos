@@ -67,6 +67,11 @@ public class FactoryLine : MonoBehaviour {
         animator.Play(AnimatorHash.Move, -1);
         animator.speed = animationSpeed;
 
+        foreach(GameObject l in lights){
+            Material m = l.GetComponent<MeshRenderer>().sharedMaterial;
+            m.color = disabled;
+        }
+
         foreach(var player in players){
             player.ClearVote();
         }
@@ -99,14 +104,40 @@ public class FactoryLine : MonoBehaviour {
         bool correct = true;
 
         int correctSlots = 0;
+        int correctCommands = 0;
 
-        //int[] possible = new int[commands]
+        bool[] possible = new bool[commands.actions.Count];
+        bool[] incorrectGuess = new bool[commands.actions.Count];
 
         for(int i = 0; i < sequence.Length; i++ ){
             correct = correct & (sequence[i] == result[i]);
 
             if((sequence[i] == result[i])){
                 correctSlots ++;
+            }
+            else{
+                possible[sequence[i]] = true;
+                incorrectGuess[result[i]] = true;
+            }
+        }
+
+        for(int i = 0; i < possible.Length; i++){
+            if(possible[i] && incorrectGuess[i]){
+                correctCommands++;
+            }
+        }
+
+        for(int l = 0; l < lights.Count; l++){
+            if(correctSlots > 0){
+                correctSlots--;
+                lights[l].GetComponent<MeshRenderer>().sharedMaterial.color = this.correct;
+            }
+            else if(correctCommands > 0){
+                correctCommands--;
+                lights[l].GetComponent<MeshRenderer>().sharedMaterial.color = this.missplaced;
+            }
+            else{
+                lights[l].GetComponent<MeshRenderer>().sharedMaterial.color = this.incorrect;
             }
         }
 

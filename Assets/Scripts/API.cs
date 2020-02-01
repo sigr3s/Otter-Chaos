@@ -54,16 +54,16 @@ public class API : MonoBehaviour {
             debugDataFrame.commands.Add(new TwitchCommand(player1, 3));
         }
 
-        if(Input.GetKeyDown(KeyCode.Q)){
+        if(Input.GetKeyDown(KeyCode.V)){
             debugDataFrame.commands.Add(new TwitchCommand(player2, 0));
         }
-        if(Input.GetKeyDown(KeyCode.W)){
+        if(Input.GetKeyDown(KeyCode.B)){
             debugDataFrame.commands.Add(new TwitchCommand(player2, 1));
         }
-        if(Input.GetKeyDown(KeyCode.E)){
+        if(Input.GetKeyDown(KeyCode.N)){
             debugDataFrame.commands.Add(new TwitchCommand(player2, 2));
         }
-        if(Input.GetKeyDown(KeyCode.R)){
+        if(Input.GetKeyDown(KeyCode.M)){
             debugDataFrame.commands.Add(new TwitchCommand(player2, 3));
         }
     }
