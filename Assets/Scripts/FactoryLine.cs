@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FactoryLine : MonoBehaviour {
 
     [Header("ID")]
-    public string name;
+    public string lineName;
     public Color color;
 
     [Header("Config")]
@@ -98,8 +98,16 @@ public class FactoryLine : MonoBehaviour {
     private void CheckResults(){
         bool correct = true;
 
+        int correctSlots = 0;
+
+        //int[] possible = new int[commands]
+
         for(int i = 0; i < sequence.Length; i++ ){
             correct = correct & (sequence[i] == result[i]);
+
+            if((sequence[i] == result[i])){
+                correctSlots ++;
+            }
         }
 
         if(correct){
