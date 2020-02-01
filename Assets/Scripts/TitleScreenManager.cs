@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class TitleScreenManager : MonoBehaviour
 {
     [SerializeField] private Button startGame = null;
+    [SerializeField] private Button closeGame = null;
     [SerializeField] private InputField twitchChannel;
 
     void Start()
     {
         startGame.onClick.AddListener(OnStartButtonPressed);
+        closeGame.onClick.AddListener(OnCloseButtonPressed);
 
         if(PlayerPrefs.HasKey("TwitchChannel")){
             twitchChannel.text = PlayerPrefs.GetString("TwitchChannel");
@@ -30,6 +32,11 @@ public class TitleScreenManager : MonoBehaviour
     
         SoundManager.instance.PlayGameStart();
         Invoke("LoadSceneGame", 2.2f);
+    }
+
+    public void OnCloseButtonPressed()
+    {
+        Application.Quit();
     }
 
     public void LoadSceneGame()
