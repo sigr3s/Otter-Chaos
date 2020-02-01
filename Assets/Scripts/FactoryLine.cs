@@ -11,6 +11,8 @@ public class FactoryLine : MonoBehaviour {
     public bool running;
     public int[] sequence;
     public int[] result;
+    public int[] votes;
+
     public int wins = 0;
     public int playerCount;
 
@@ -28,6 +30,7 @@ public class FactoryLine : MonoBehaviour {
         currentTime = 0f;
         currentFrame = 0;
         result = new int[sequence.Length];
+        votes = new int[commands.actions.Count];
         running = true;
     }
 
@@ -39,10 +42,15 @@ public class FactoryLine : MonoBehaviour {
     {
         if(running){
             if(actions.ContainsKey(playerId)){
+                int old = actions[playerId];
                 actions[playerId] = command;
+
+                votes[old] -= 1;
+                votes[command] += 1;
             }
             else{
                 actions.Add(playerId, command);
+                votes[command] += 1;
             }
         }
     }
@@ -102,18 +110,13 @@ public class FactoryLine : MonoBehaviour {
 
         switch(resultMode){
             case ResultMode.Democracy:
-                int[] resCount = new int[commands.actions.Count];
-
-                foreach(var action in actions){
-                    resCount[action.Value] += 1;
-                }
 
                 int maxCount = 0;
 
-                for(int i = 0; i < resCount.Length; i++){
-                    if(resCount[i] > maxCount){
+                for(int i = 0; i < votes.Length; i++){
+                    if(votes[i] > maxCount){
                         result = i;
-                        maxCount = resCount[i];
+                        maxCount = votes[i];
                     }
                 }
 
@@ -121,6 +124,7 @@ public class FactoryLine : MonoBehaviour {
         }
 
         actions = new Dictionary<string, int>();
+        votes = new int[commands.actions.Count];
 
         return result;
     }
