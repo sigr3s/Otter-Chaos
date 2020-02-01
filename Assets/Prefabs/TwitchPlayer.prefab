@@ -52,6 +52,16 @@ MonoBehaviour:
   animator: {fileID: 2568402472693051231}
   commandDisplay: {fileID: 4047692079906896202}
   arpon: {fileID: 7410689533569396448}
+  hats:
+  - {fileID: 100000, guid: 016013a4c6c131f4bb4c2e6f9027c147, type: 3}
+  - {fileID: 100000, guid: c64a76fcfce26a144aeece79057f3717, type: 3}
+  - {fileID: 100002, guid: 24a351b8ed8689945917d0bd67d0977b, type: 3}
+  - {fileID: 100002, guid: 7e9d56c67aa7efa438acbdf72cc7d83b, type: 3}
+  - {fileID: 100002, guid: a64be2b932fde234faa39609919d2811, type: 3}
+  - {fileID: 100002, guid: 2804f239ebb360f4fb2bf9b5b8a5284b, type: 3}
+  - {fileID: 100002, guid: 1f0c5db0cffb90145854ef69fdad854a, type: 3}
+  - {fileID: 100002, guid: 534ece438da345948b8bfee67d1a02ed, type: 3}
+  hatTransform: {fileID: 3853075674605933929}
   asignedLine: {fileID: 0}
 --- !u!95 &2568402472693051231
 Animator:
@@ -72,6 +82,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &7271151040397966799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3853075674605933929}
+  m_Layer: 0
+  m_Name: Props
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3853075674605933929
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7271151040397966799}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5000001, y: -1.20875, z: 0.49999997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2976184811605233748}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &369678466717017854
 PrefabInstance:
   m_ObjectHideFlags: 0

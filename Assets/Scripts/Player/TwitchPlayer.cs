@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TwitchPlayer : MonoBehaviour {
@@ -6,6 +7,10 @@ public class TwitchPlayer : MonoBehaviour {
     public Animator animator;
     public CommandDisplay commandDisplay;
     public GameObject arpon;
+
+    [Header("Props")]
+    public List<GameObject> hats;
+    public Transform hatTransform;
 
     [Header("Debug")]
     public FactoryLine asignedLine;
@@ -21,6 +26,18 @@ public class TwitchPlayer : MonoBehaviour {
 
         Material m = arpon.GetComponent<MeshRenderer>().material;
         m.color = c;
+
+        int prop = UnityEngine.Random.Range(0, hats.Count * 2);
+
+        if(prop >= hats.Count){
+
+        }
+        else{
+            GameObject hat = Instantiate(hats[prop], hatTransform);
+            hat.transform.localPosition = Vector3.zero;
+            hat.transform.localRotation = Quaternion.identity;
+            hat.transform.localScale = Vector3.one;
+        }
     }
 
     public void ExecuteCommand(int command)
