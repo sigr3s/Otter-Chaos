@@ -47,8 +47,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f0bdd71de304120a2b43161808a4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineName: Bottom
+  color: {r: 0.5372549, g: 0.7607844, b: 0.24313727, a: 1}
   animationSpeed: 0.25
   playerSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -67,6 +76,10 @@ MonoBehaviour:
   animator: {fileID: 3193737878918613644}
   resultMode: 0
   scoreText: {fileID: 0}
+  propList:
+  - {fileID: 6754518830603849902}
+  - {fileID: 6570276168685932660}
+  - {fileID: 4969438927359829590}
   running: 0
   sequence: 
   result: 
@@ -763,6 +776,24 @@ PrefabInstance:
 --- !u!4 &70657760388141907 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5728318186635480820, guid: a5b785eb91ca7401bb699dce66be0b14,
+    type: 3}
+  m_PrefabInstance: {fileID: 5729728616105647527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6754518830603849902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1313022248508607753, guid: a5b785eb91ca7401bb699dce66be0b14,
+    type: 3}
+  m_PrefabInstance: {fileID: 5729728616105647527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6570276168685932660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1489102188182719955, guid: a5b785eb91ca7401bb699dce66be0b14,
+    type: 3}
+  m_PrefabInstance: {fileID: 5729728616105647527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4969438927359829590 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 824980830024236017, guid: a5b785eb91ca7401bb699dce66be0b14,
     type: 3}
   m_PrefabInstance: {fileID: 5729728616105647527}
   m_PrefabAsset: {fileID: 0}

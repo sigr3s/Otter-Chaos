@@ -29,6 +29,9 @@ public class FactoryLine : MonoBehaviour {
     public ResultMode resultMode = ResultMode.Democracy;
     public Text scoreText = null;
 
+    [Header("Props")]
+    public GameObject[] propList = null;
+
     [Header("Debug")]
     public bool running;
     public int[] sequence;
@@ -55,7 +58,7 @@ public class FactoryLine : MonoBehaviour {
         }
     }
 
-    public void StartLine(int[] sequence, Action<FactoryLine> OnComplete, Commands commands){
+    public void StartLine(int[] sequence, Action<FactoryLine> OnComplete, Commands commands, int propIndex){
         this.sequence = sequence;
         this.OnComplete = OnComplete;
         this.commands = commands;
@@ -66,6 +69,12 @@ public class FactoryLine : MonoBehaviour {
 
         animator.Play(AnimatorHash.Move, -1);
         animator.speed = animationSpeed;
+
+        for (int i = 0; i < propList.Length; ++i)
+        {
+            if (i == propIndex) propList[i].SetActive(true);
+            else propList[i].SetActive(false);
+        }
 
         foreach(GameObject l in lights){
             Material m = l.GetComponent<MeshRenderer>().sharedMaterial;
