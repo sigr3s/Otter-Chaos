@@ -5,6 +5,7 @@ using UnityEngine;
 public class FactoryLine : MonoBehaviour {
     public float frameTime = 10f;
     public List<Transform> playerSlots;
+    [SerializeField] Animator animator = default;
     public ResultMode resultMode = ResultMode.Democracy;
 
     [Header("Debug")]
@@ -23,6 +24,16 @@ public class FactoryLine : MonoBehaviour {
     [SerializeField] private float currentTime = 0f;
     [SerializeField] private int currentFrame = 0;
 
+
+    static class AnimatorHash
+    {
+        public static readonly int Move = Animator.StringToHash("move");
+    }
+
+    private void Awake() {
+        UpdatePosition(0);
+    }
+
     public void StartLine(int[] sequence, Action<FactoryLine> OnComplete, Commands commands){
         this.sequence = sequence;
         this.OnComplete = OnComplete;
@@ -32,10 +43,12 @@ public class FactoryLine : MonoBehaviour {
         result = new int[sequence.Length];
         votes = new int[commands.actions.Count];
         running = true;
+        UpdatePosition(0);
     }
 
     public void StopLine(){
         running = false;
+        UpdatePosition(0);
     }
 
     public void AddPlayerCommand(string playerId, int command)
@@ -64,11 +77,29 @@ public class FactoryLine : MonoBehaviour {
         if(running){
             currentTime += Time.deltaTime;
 
+            float normalizedTime = GetNormalizedTime();
+            UpdatePosition(normalizedTime);
+
             if(currentTime > frameTime){
-                currentTime = 0f;
-                CheckFrame();
+                
             }
         }
+    }
+
+    private float GetNormalizedTime()
+    {
+        float currentT = (frameTime * currentFrame) + Mathf.Min(frameTime, currentTime);
+        return (currentT / (frameTime*sequence.Length));
+    }
+
+    public void UpdatePosition(float position)
+    {
+        if (animator.isActiveAndEnabled)
+        {
+            animator.Play(AnimatorHash.Move, -1, position);
+        }
+
+        animator.speed = 0;
     }
 
     private void CheckFrame()
