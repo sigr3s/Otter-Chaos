@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -455,7 +455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 636063942}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: SpawnTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,20 +542,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   commands: {fileID: 11400000, guid: 3dccd1e26bb1a4a1caa7f0122e175d30, type: 2}
   gameStatus: 0
-  factoryLines:
-  - {fileID: 626305192585236507}
-  - {fileID: 548742885}
   messageBox: {fileID: 468187341}
   endGameBox: {fileID: 2124133841}
   winnerColorImage: {fileID: 1767985025}
   messageText: {fileID: 468187340}
   timerText: {fileID: 468187339}
+  scoreBoard: {fileID: 1621506611}
+  suddenDeath: {fileID: 1442724268}
   playerPrefab: {fileID: 1664499724952630815, guid: 951f4a139a67a9c46b9f48b9cf7f1d33,
     type: 3}
+  factoryLines:
+  - {fileID: 626305192585236507}
+  - {fileID: 548742885}
   joinPhaseDuration: 5
   rounds: 3
   lineFrames: 3
   secondsBetweenRequests: 1
+  currentRound: 1
 --- !u!4 &1202530222
 Transform:
   m_ObjectHideFlags: 0
@@ -582,6 +585,18 @@ MonoBehaviour:
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &1442724268 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 7991756216917217658, guid: 51c35bc7a106d4544965da0a39cfc562,
+    type: 3}
+  m_PrefabInstance: {fileID: 1802447488052260778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1621506611 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 4406747704645873347, guid: 51c35bc7a106d4544965da0a39cfc562,
+    type: 3}
+  m_PrefabInstance: {fileID: 1802447488052260778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1767985025 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1767985025, guid: 4d2f7f62be84e31418bfdfbd4a90b99d,
@@ -686,7 +701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1861220674}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SpawnBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -979,6 +994,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Scenery
+      objectReference: {fileID: 0}
+    - target: {fileID: 3875257748290894272, guid: 51c35bc7a106d4544965da0a39cfc562,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51c35bc7a106d4544965da0a39cfc562, type: 3}

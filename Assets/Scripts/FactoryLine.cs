@@ -10,29 +10,29 @@ public class FactoryLine : MonoBehaviour {
     public Color color;
 
     [Header("Config")]
+    [Space(10)]
     public float animationSpeed = 0.5f;
-    public List<Transform> playerSlots;
-    public List<CommandDisplay> displays;
+    public ResultMode resultMode = ResultMode.Democracy;
 
-    [Space(20)]
 
     [Header("Lights")]
+    [Space(10)]
     public List<GameObject> lights;
     public Color correct;
     public Color incorrect;
     public Color missplaced;
     public Color disabled;
 
-    [Space(20)]
-
-    [SerializeField] Animator animator = default;
-    public ResultMode resultMode = ResultMode.Democracy;
+    [Header("Scene refernces")]
     public Text scoreText = null;
+    public List<Transform> playerSlots;
+    public List<CommandDisplay> displays;
 
     [Header("Props")]
     public GameObject[] propList = null;
 
     [Header("Debug")]
+    [Space(30)]
     public bool running;
     public int[] sequence;
     public int[] result;
@@ -42,8 +42,18 @@ public class FactoryLine : MonoBehaviour {
     private Commands commands;
     private Action<FactoryLine> OnComplete;
     private Dictionary<string, int> actions = new Dictionary<string, int>();
-    [SerializeField] private List<TwitchPlayer> players = new List<TwitchPlayer>();
-    [SerializeField] private int currentFrame = 0;
+    private List<TwitchPlayer> players = new List<TwitchPlayer>();
+    private int currentFrame = 0;
+
+    private Animator _animator = null;
+    private Animator animator{
+        get{
+            if(_animator == null){
+                _animator = GetComponent<Animator>();
+            }
+            return _animator;
+        }
+    }
 
 
     static class AnimatorHash

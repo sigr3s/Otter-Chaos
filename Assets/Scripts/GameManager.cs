@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,33 +9,38 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    [Header("Data")]
     public Commands commands;
     public GameStatus gameStatus;
     public Dictionary<string, TwitchPlayer> players = new Dictionary<string, TwitchPlayer>();
 
-
     [Header("Scene references")]
-    public List<FactoryLine> factoryLines;
+    [Space(10)]
     public GameObject messageBox = null;
     public GameObject endGameBox = null;
     public Image winnerColorImage = null;
     public Text messageText = null;
     public Text timerText = null;
+    public CanvasGroup scoreBoard;
+    public CanvasGroup suddenDeath;
 
     [Space(10)]
     public TwitchPlayer playerPrefab;
+    public List<FactoryLine> factoryLines;
+
 
     [Header("Game Settings")]
+    [Space(10)]
     public float joinPhaseDuration;
     public int rounds = 3;
     public int lineFrames = 3;
 
-
     [Header("Server Settings")]
+    [Space(10)]
     private float secondsSinceLastRequest = 0f;
     public float secondsBetweenRequests = 2f;
 
-    private int lastTimestamp = 0;
     [SerializeField] private int currentRound = 1;
 
     private void Awake() {
@@ -159,6 +165,8 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(EndGame(currentWinner));
             }
             else{
+                scoreBoard.DOFade(0, 0.25f);
+                suddenDeath.DOFade(1, 0.25f);
                 gameStatus = GameStatus.PostRound;
                 StartCoroutine(PostRound(OnPostRoundComplete));
             }
@@ -172,6 +180,11 @@ public class GameManager : MonoBehaviour
             else{
                 gameStatus = GameStatus.PostRound;
                 StartCoroutine(PostRound(OnPostRoundComplete));
+
+                if((first - second) == 0 && (rounds - currentRound) < 2){
+                    scoreBoard.DOFade(0, 0.25f);
+                    suddenDeath.DOFade(1, 0.25f);
+                }
             }
         }
     }
