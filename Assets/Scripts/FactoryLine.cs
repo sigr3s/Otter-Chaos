@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FactoryLine : MonoBehaviour {
+    public float animationSpeed = 0.5f;
     public float frameTime = 10f;
     public List<Transform> playerSlots;
     [SerializeField] Animator animator = default;
@@ -30,10 +31,6 @@ public class FactoryLine : MonoBehaviour {
         public static readonly int Move = Animator.StringToHash("move");
     }
 
-    private void Awake() {
-        UpdatePosition(0);
-    }
-
     public void StartLine(int[] sequence, Action<FactoryLine> OnComplete, Commands commands){
         this.sequence = sequence;
         this.OnComplete = OnComplete;
@@ -43,12 +40,14 @@ public class FactoryLine : MonoBehaviour {
         result = new int[sequence.Length];
         votes = new int[commands.actions.Count];
         running = true;
-        UpdatePosition(0);
+
+        animator.Play(AnimatorHash.Move, -1);
+        animator.speed = animationSpeed;
     }
 
     public void StopLine(){
         running = false;
-        UpdatePosition(0);
+        animator.speed = 0;
     }
 
     public void AddPlayerCommand(string playerId, int command)
@@ -68,52 +67,13 @@ public class FactoryLine : MonoBehaviour {
         }
     }
 
-    public int ComputeActionResult(){
-        return 0;
-    }
-
-    void Update()
-    {
-        if(running){
-            currentTime += Time.deltaTime;
-
-            float normalizedTime = GetNormalizedTime();
-            UpdatePosition(normalizedTime);
-
-            if(currentTime > frameTime){
-                
-            }
-        }
-    }
-
-    private float GetNormalizedTime()
-    {
-        float currentT = (frameTime * currentFrame) + Mathf.Min(frameTime, currentTime);
-        return (currentT / (frameTime*sequence.Length));
-    }
-
-    public void UpdatePosition(float position)
-    {
-        if (animator.isActiveAndEnabled)
-        {
-            animator.Play(AnimatorHash.Move, -1, position);
-        }
-
-        animator.speed = 0;
-    }
-
     private void CheckFrame()
     {
         int res = GetPlayersResult();
         result[currentFrame] = res;
 
         if(currentFrame == sequence.Length - 1){
-            if(CheckResults()){
-                Win();
-            }
-            else{
-                currentFrame = 0;
-            }
+            currentFrame = 0;
         }
         else{
             currentFrame++;
@@ -121,14 +81,17 @@ public class FactoryLine : MonoBehaviour {
 
     }
 
-    private bool CheckResults(){
+    private void CheckResults(){
         bool correct = true;
 
         for(int i = 0; i < sequence.Length; i++ ){
             correct = correct & (sequence[i] == result[i]);
         }
 
-        return correct;
+        if(correct){
+            animator.speed = 0;
+            Win();
+        }
     }
 
     private int GetPlayersResult()

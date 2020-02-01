@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f0bdd71de304120a2b43161808a4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationSpeed: 0.25
   frameTime: 5
   playerSlots:
   - {fileID: 0}
