@@ -192,6 +192,8 @@ public class GameManager : MonoBehaviour
                 second = fl.wins;
             }
             fl.scoreText.text = "" + fl.wins;
+
+            fl.NotifyWinner(winner);
         }
 
         if( (first - second) > (rounds - currentRound)){

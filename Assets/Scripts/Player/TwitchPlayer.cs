@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class TwitchPlayer : MonoBehaviour {
     public TwitchPlayerModel playerData;
-    public FactoryLine asignedLine;
+    public Animator animator;
     public CommandDisplay commandDisplay;
 
+    [Header("Debug")]
+    public FactoryLine asignedLine;
     private Commands commands;
 
     public void ExecuteCommand(int command)
@@ -33,15 +35,18 @@ public class TwitchPlayer : MonoBehaviour {
 
     public void Lose(){
         commandDisplay.Display(commands.hate);
+        animator.SetTrigger("lose");
     }
 
     public void Win()
     {
         commandDisplay.Display(commands.love);
+        animator.SetTrigger("win");
     }
 
     public void ClearVote()
     {
         commandDisplay.Display(commands.bg);
+        animator.SetTrigger("reset");
     }
 }

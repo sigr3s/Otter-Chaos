@@ -150,9 +150,6 @@ public class FactoryLine : MonoBehaviour {
     [ContextMenu("Win")]
     public void Win(){
         OnComplete(this);
-        foreach(var player in players){
-            player.Win();
-        }
     }
 
 #region Player
@@ -209,6 +206,18 @@ public class FactoryLine : MonoBehaviour {
             else{
                 actions.Add(playerId, command);
                 votes[command] += 1;
+            }
+        }
+    }
+
+    public void NotifyWinner(FactoryLine winner)
+    {
+        foreach(var player in players){
+            if(winner == this){
+                player.Win();
+            }
+            else{
+                player.Lose();
             }
         }
     }

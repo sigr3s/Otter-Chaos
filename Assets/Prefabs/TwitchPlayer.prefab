@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2976184811653470375}
   - component: {fileID: 1664499724952630815}
+  - component: {fileID: 2568402472693051231}
   m_Layer: 0
   m_Name: TwitchPlayer
   m_TagString: Untagged
@@ -48,8 +49,28 @@ MonoBehaviour:
   playerData:
     id: 
     color: 
-  asignedLine: {fileID: 0}
+  animator: {fileID: 2568402472693051231}
   commandDisplay: {fileID: 4047692079906896202}
+  asignedLine: {fileID: 0}
+--- !u!95 &2568402472693051231
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976184811653470372}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 12c8171e651df48eaa681cd7d4f17553, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &369678466717017854
 PrefabInstance:
   m_ObjectHideFlags: 0
