@@ -63,9 +63,9 @@ public class GameManager : MonoBehaviour
             secondsSinceLastRequest = 0f;
 
             API.instance.GetFrame(ProcessFrame);
-            API.instance.GetLocalFrame(ProcessFrame);
         }
 
+        API.instance.GetLocalFrame(ProcessFrame);
     }
 
     public FactoryLine GetLineForNewUser(){
@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator EndGame(FactoryLine factory){
         Debug.Log("End game!");
         winnerColorImage.color = factory.color;
+        API.instance.EndGame();
         endGameBox.SetActive(true);
         yield return new WaitForSeconds(5f);
         endGameBox.SetActive(false);

@@ -163,7 +163,15 @@ public class API : MonoBehaviour {
     }
 
     public void EndGame(){
-
+        StartCoroutine(CloseGame());
     }
 
+    private IEnumerator CloseGame()
+    {
+
+        using (UnityWebRequest www = UnityWebRequest.Delete(baseUrl + "/game/" + gameSession.session_id))
+        {
+            yield return www.SendWebRequest();
+        }
+    }
 }
