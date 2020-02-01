@@ -1,4 +1,4 @@
 [System.Serializable]
-public class NewSession : BaseResponse {
+public class GameSession : BaseResponse {
     public string session_id;
 }

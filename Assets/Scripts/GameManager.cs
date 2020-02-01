@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
         currentRound = 1;
-        API.instance.StartGame();
+        API.instance.StartGame(commands);
         StartCoroutine(JoinPhase(OnJoinPhaseCompleted));
     }
 
