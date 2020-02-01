@@ -113,7 +113,8 @@ public class GameManager : MonoBehaviour
 #region Callbacks
     private void ProcessFrame(DataFrame dataFrame)
     {
-        foreach(TwitchPlayerModel newPlayer in dataFrame.new_players){
+        if(dataFrame.new_players != null){
+            foreach(TwitchPlayerModel newPlayer in dataFrame.new_players){
             // spawn players
             // add player to players dict
 
@@ -130,16 +131,19 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
-            player.SetData(newPlayer, asignedLine);
+            player.SetData(newPlayer, asignedLine, commands);
             players.Add(newPlayer.id, player);
         }
 
-        foreach(var action in dataFrame.commands){
+        }
+        if(dataFrame.commands != null){
+            foreach(var action in dataFrame.commands){
 
-            if(players.ContainsKey(action.player_id)){
-                players[action.player_id].ExecuteCommand(action.command);
+                if(players.ContainsKey(action.player_id)){
+                    players[action.player_id].ExecuteCommand(action.command);
+                }
+
             }
-
         }
     }
 

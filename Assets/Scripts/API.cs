@@ -13,16 +13,58 @@ public class API : MonoBehaviour {
 
 
     [Header("Debug")]
-    public DataFrame joinDataFrame;
-    public DataFrame debugDataFrame;
-    public bool sendJoin = false;
-    public bool sendDebug = false;
+    public string player1 = "sigr3s";
+    public string player2 = "drixide";
+    private DataFrame joinDataFrame;
+    private bool sendJoin = false;
+    public DataFrame debugDataFrame = new DataFrame();
 
     void Awake()
     {
         instance = this;
         if(PlayerPrefs.HasKey("TwitchChannel")){
             channelID = PlayerPrefs.GetString("TwitchChannel");
+        }
+    }
+
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.J)){
+            joinDataFrame = new DataFrame();
+            joinDataFrame.new_players = new List<TwitchPlayerModel>();
+            joinDataFrame.new_players.Add(new TwitchPlayerModel(player1));
+            joinDataFrame.new_players.Add(new TwitchPlayerModel(player2));
+            sendJoin = true;
+        }
+
+        if(debugDataFrame.commands == null){
+            debugDataFrame.commands = new List<TwitchCommand>();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1)){
+            debugDataFrame.commands.Add(new TwitchCommand(player1, 0));
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha2)){
+            debugDataFrame.commands.Add(new TwitchCommand(player1, 1));
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha3)){
+            debugDataFrame.commands.Add(new TwitchCommand(player1, 2));
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha4)){
+            debugDataFrame.commands.Add(new TwitchCommand(player1, 3));
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q)){
+            debugDataFrame.commands.Add(new TwitchCommand(player2, 0));
+        }
+        if(Input.GetKeyDown(KeyCode.W)){
+            debugDataFrame.commands.Add(new TwitchCommand(player2, 1));
+        }
+        if(Input.GetKeyDown(KeyCode.E)){
+            debugDataFrame.commands.Add(new TwitchCommand(player2, 2));
+        }
+        if(Input.GetKeyDown(KeyCode.R)){
+            debugDataFrame.commands.Add(new TwitchCommand(player2, 3));
         }
     }
 
@@ -93,7 +135,6 @@ public class API : MonoBehaviour {
         }
     }
 
-
     public void GetFrame(int lastTimestamp, Action<DataFrame> OnSuccess){
         if(!string.IsNullOrEmpty(gameSession.session_id)){
             StartCoroutine(SendRequest<DataFrame>("/game/" + gameSession.session_id, OnSuccess, () =>{
@@ -104,9 +145,9 @@ public class API : MonoBehaviour {
             //Debug.LogWarning("Session not started")
         }
 
-        if(sendDebug){
+        if(debugDataFrame.commands != null && debugDataFrame.commands.Count > 0){
             DataFrame df = debugDataFrame;
-            sendDebug = false;
+            debugDataFrame = new DataFrame();
             OnSuccess(df);
         }
 

@@ -41,6 +41,10 @@ public class FactoryLine : MonoBehaviour {
 
         animator.Play(AnimatorHash.Move, -1);
         animator.speed = animationSpeed;
+
+        foreach(var player in players){
+            player.ClearVote();
+        }
     }
 
     public void StopLine(){
@@ -60,6 +64,10 @@ public class FactoryLine : MonoBehaviour {
         else{
             currentFrame++;
         }
+
+        foreach(var player in players){
+            player.ClearVote();
+        }
     }
 
     private void CheckResults(){
@@ -78,6 +86,9 @@ public class FactoryLine : MonoBehaviour {
     [ContextMenu("Win")]
     public void Win(){
         OnComplete(this);
+        foreach(var player in players){
+            player.Win();
+        }
     }
 
 #region Player

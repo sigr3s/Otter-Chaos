@@ -22,3 +22,6 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 50f1a954755b49e488009679c7254957, type: 3}
   - actionName: shell
     image: {fileID: 21300000, guid: 37cc3b4359f29a44893e7e54781a424b, type: 3}
+  love: {fileID: 21300000, guid: 3251f1d044e803d49a9e32bf8a78d68a, type: 3}
+  hate: {fileID: 21300000, guid: d0fd491449d03754883478bbb3a0bf84, type: 3}
+  bg: {fileID: 21300000, guid: a070c3ba3a1cd6b45af4222f60383f8e, type: 3}

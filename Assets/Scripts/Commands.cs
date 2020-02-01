@@ -6,6 +6,11 @@ using UnityEngine;
 public class Commands : ScriptableObject {
     public string join;
     public List<TwitchAction> actions;
+
+    public Sprite love;
+    public Sprite hate;
+    public Sprite bg;
+
 }
 
 [System.Serializable]
