@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public float secondsBetweenRequests = 2f;
 
     private int lastTimestamp = 0;
-    private int currentRound = 0;
+    [SerializeField] private int currentRound = 1;
 
     private void Awake() {
         instance = this;
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Sequence number " +  i  +  " :   " + sn );
         }
 
-        return sequence;
+        return new int[3] {0,0,0}; //sequence;
     }
 
 #region GamePhases
@@ -125,6 +125,55 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(10f);
         endGameBox.SetActive(false);
         SceneManager.LoadScene(0);
+    }
+
+    private IEnumerator CheckWinner(){
+        yield return new WaitForSeconds(0.5f);
+
+        int first = 0;
+        int second = 0;
+
+        FactoryLine currentWinner = null;
+        foreach(FactoryLine fl in factoryLines){
+            bool correctSol = fl.IsCorrectResult();
+
+            if(correctSol){
+                fl.wins ++;
+            }
+
+            if(fl.wins > first){
+                currentWinner = fl;
+                second = first;
+                first = fl.wins;
+            }
+            else if(fl.wins > second){
+                second = fl.wins;
+            }
+            fl.scoreText.text = "" + fl.wins;
+
+            fl.NotifyWinner(correctSol);
+        }
+
+        if(rounds-currentRound <= 0){
+            if(first > second){
+                StartCoroutine(EndGame(currentWinner));
+            }
+            else{
+                gameStatus = GameStatus.PostRound;
+                StartCoroutine(PostRound(OnPostRoundComplete));
+            }
+        }
+        else{
+            if( (first - second) > (rounds - currentRound)){
+                gameStatus = GameStatus.EndGame;
+                StartCoroutine(EndGame(currentWinner));
+
+            }
+            else{
+                gameStatus = GameStatus.PostRound;
+                StartCoroutine(PostRound(OnPostRoundComplete));
+            }
+        }
     }
 
 #endregion
@@ -195,37 +244,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Round complete");
 
-        winner.wins ++;
+        if(!winner.running){ 
+            return;
+        }
 
-        int first = 0;
-        int second = 0;
-
-        FactoryLine currentWinner = null;
         foreach(FactoryLine fl in factoryLines){
             fl.StopLine();
-
-            if(fl.wins > first){
-                currentWinner = fl;
-                second = first;
-                first = fl.wins;
-            }
-            else if(fl.wins > second){
-                second = fl.wins;
-            }
-            fl.scoreText.text = "" + fl.wins;
-
-            fl.NotifyWinner(winner);
         }
 
-        if( (first - second) > (rounds - currentRound)){
-            gameStatus = GameStatus.EndGame;
-            StartCoroutine(EndGame(currentWinner));
-
-        }
-        else{
-            gameStatus = GameStatus.PostRound;
-            StartCoroutine(PostRound(OnPostRoundComplete));
-        }
+        StartCoroutine(CheckWinner());
     }
 
     private void OnPostRoundComplete(){

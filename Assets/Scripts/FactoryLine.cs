@@ -100,6 +100,16 @@ public class FactoryLine : MonoBehaviour {
         }
     }
 
+    public bool IsCorrectResult(){
+        bool correct = true;
+
+        for(int i = 0; i < sequence.Length; i++ ){
+            correct = correct & (sequence[i] == result[i]);
+        }
+
+        return correct;
+    }
+
     private void CheckResults(){
         bool correct = true;
 
@@ -210,10 +220,10 @@ public class FactoryLine : MonoBehaviour {
         }
     }
 
-    public void NotifyWinner(FactoryLine winner)
+    public void NotifyWinner(bool hasWon)
     {
         foreach(var player in players){
-            if(winner == this){
+            if(hasWon){
                 player.Win();
             }
             else{
