@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
 #region Callbacks
     private void OnSuccess(DataFrame dataFrame)
     {
-        foreach(TwitchPlayerModel newPlayer in dataFrame.joined){
+        foreach(TwitchPlayerModel newPlayer in dataFrame.new_players){
             // spawn players
             // add player to players dict
 
@@ -126,10 +126,10 @@ public class GameManager : MonoBehaviour
             players.Add(newPlayer.id, player);
         }
 
-        foreach(var action in dataFrame.actions){
+        foreach(var action in dataFrame.commands){
 
-            if(players.ContainsKey(action.playerID)){
-                players[action.playerID].ExecuteCommand(action.command);
+            if(players.ContainsKey(action.player_id)){
+                players[action.player_id].ExecuteCommand(action.command);
             }
 
         }

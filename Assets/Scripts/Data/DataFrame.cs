@@ -1,12 +1,7 @@
 using System.Collections.Generic;
 
 [System.Serializable]
-public class DataFrame{
-
-    public List<TwitchPlayerModel> joined;
-
-    public List<TwitchCommand> actions;
-
-    public int timestamp;
-
+public class DataFrame : BaseResponse{
+    public List<TwitchPlayerModel> new_players;
+    public List<TwitchCommand> commands;
 }
