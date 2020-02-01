@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FactoryLine : MonoBehaviour {
     public float animationSpeed = 0.5f;
@@ -8,6 +9,7 @@ public class FactoryLine : MonoBehaviour {
     public List<CommandDisplay> displays;
     [SerializeField] Animator animator = default;
     public ResultMode resultMode = ResultMode.Democracy;
+    public Text scoreText = null;
 
     [Header("Debug")]
     public bool running;
