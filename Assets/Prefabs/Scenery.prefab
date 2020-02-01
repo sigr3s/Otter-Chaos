@@ -1698,7 +1698,7 @@ PrefabInstance:
     - target: {fileID: 761605469820600448, guid: 025a3f0d112e3b94b8ab4b5613d6ffc5,
         type: 3}
       propertyPath: m_Text
-      value: /FISH =
+      value: '!FISH ='
       objectReference: {fileID: 0}
     - target: {fileID: 1015551395988663268, guid: 025a3f0d112e3b94b8ab4b5613d6ffc5,
         type: 3}
@@ -1708,7 +1708,7 @@ PrefabInstance:
     - target: {fileID: 3607232050256787680, guid: 025a3f0d112e3b94b8ab4b5613d6ffc5,
         type: 3}
       propertyPath: m_Text
-      value: /TAPE =
+      value: '!TAPE ='
       objectReference: {fileID: 0}
     - target: {fileID: 4221796239680546790, guid: 025a3f0d112e3b94b8ab4b5613d6ffc5,
         type: 3}
@@ -1809,7 +1809,7 @@ PrefabInstance:
     - target: {fileID: 761605469820600448, guid: 025a3f0d112e3b94b8ab4b5613d6ffc5,
         type: 3}
       propertyPath: m_Text
-      value: /PAINT =
+      value: '!PAINT ='
       objectReference: {fileID: 0}
     - target: {fileID: 852985027268331829, guid: 025a3f0d112e3b94b8ab4b5613d6ffc5,
         type: 3}
@@ -1825,7 +1825,7 @@ PrefabInstance:
     - target: {fileID: 3607232050256787680, guid: 025a3f0d112e3b94b8ab4b5613d6ffc5,
         type: 3}
       propertyPath: m_Text
-      value: /SHELL =
+      value: '!SHELL ='
       objectReference: {fileID: 0}
     - target: {fileID: 4221796239680546790, guid: 025a3f0d112e3b94b8ab4b5613d6ffc5,
         type: 3}

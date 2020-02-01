@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator JoinPhase(System.Action JoinPhaseCompleted)
     {
         Debug.Log("Start Join Phase!");
-        messageText.text = "Get ready! Type '/join' in the chat.";
+        messageText.text = "Get ready! Type '!join' in the chat.";
         timerText.text = (int)joinPhaseDuration+"";
         messageBox.SetActive(true);
         for (int i = (int)joinPhaseDuration; i >= 0; i--)
