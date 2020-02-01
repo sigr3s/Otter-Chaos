@@ -5,10 +5,23 @@ public class TwitchPlayer : MonoBehaviour {
     public TwitchPlayerModel playerData;
     public Animator animator;
     public CommandDisplay commandDisplay;
+    public GameObject arpon;
 
     [Header("Debug")]
     public FactoryLine asignedLine;
     private Commands commands;
+
+    private void Awake() {
+        Color c = new Color(
+            UnityEngine.Random.Range(0, 255) / 255f,
+            UnityEngine.Random.Range(0, 255) / 255f,
+            UnityEngine.Random.Range(0, 255) / 255f,
+            255
+        );
+
+        Material m = arpon.GetComponent<MeshRenderer>().material;
+        m.color = c;
+    }
 
     public void ExecuteCommand(int command)
     {
@@ -30,6 +43,17 @@ public class TwitchPlayer : MonoBehaviour {
 
         this.asignedLine.RegisterPlayer(this);
 
+        Color color = new Color(
+            UnityEngine.Random.Range(0, 255) / 255f,
+            UnityEngine.Random.Range(0, 255) / 255f,
+            UnityEngine.Random.Range(0, 255) / 255f,
+            255
+        );
+
+        ColorUtility.TryParseHtmlString(newPlayer.color, out color);
+
+        arpon.GetComponent<MeshRenderer>().sharedMaterial.color = color;
+
         //TODO: Color y nombre del player
     }
 
@@ -46,7 +70,7 @@ public class TwitchPlayer : MonoBehaviour {
 
     public void ClearVote()
     {
-        commandDisplay.Display(commands.bg);
+        commandDisplay.Display(playerData.id.Substring(0,1));
         animator.SetTrigger("reset");
     }
 }
