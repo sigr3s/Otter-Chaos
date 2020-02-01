@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Sequence number " +  i  +  " :   " + sn );
         }
 
-        return new int[3] {0,0,0}; //sequence;
+        return sequence;
     }
 
 #region GamePhases

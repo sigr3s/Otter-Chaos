@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineName: Bottom
   color: {r: 0.5372549, g: 0.7607844, b: 0.24313727, a: 1}
-  animationSpeed: 0.5
+  animationSpeed: 0.25
   resultMode: 0
   lights:
   - {fileID: 7107350702440732409}
