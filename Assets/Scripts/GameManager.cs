@@ -187,6 +187,7 @@ public class GameManager : MonoBehaviour
             else if(fl.wins > second){
                 second = fl.wins;
             }
+            fl.scoreText.text = "" + fl.wins;
         }
 
         if( (first - second) > (rounds - currentRound)){
