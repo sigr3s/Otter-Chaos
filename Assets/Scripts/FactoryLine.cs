@@ -12,6 +12,7 @@ public class FactoryLine : MonoBehaviour {
     [Header("Config")]
     [Space(10)]
     public float animationSpeed = 0.5f;
+    public float beltMultiplier = 10f;
     public ResultMode resultMode = ResultMode.Democracy;
 
 
@@ -27,6 +28,7 @@ public class FactoryLine : MonoBehaviour {
     public Text scoreText = null;
     public List<Transform> playerSlots;
     public List<CommandDisplay> displays;
+    public Material beltMaterial;
 
     [Header("Props")]
     public GameObject[] propList = null;
@@ -79,6 +81,7 @@ public class FactoryLine : MonoBehaviour {
 
         animator.Play(AnimatorHash.Move, -1);
         animator.speed = animationSpeed;
+        beltMaterial.SetFloat("_Speed", animationSpeed * beltMultiplier);
 
         for (int i = 0; i < propList.Length; ++i)
         {
@@ -99,6 +102,7 @@ public class FactoryLine : MonoBehaviour {
     public void StopLine(){
         running = false;
         animator.speed = 0;
+        beltMaterial.SetFloat("_Speed", 0);
     }
 
     private void CheckFrame()
@@ -172,6 +176,7 @@ public class FactoryLine : MonoBehaviour {
 
         if(correct){
             animator.speed = 0;
+            beltMaterial.SetFloat("_Speed", 0);
             Win();
         }
         else
