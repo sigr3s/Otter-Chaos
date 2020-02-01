@@ -163,7 +163,9 @@ public class API : MonoBehaviour {
     }
 
     public void EndGame(){
-        StartCoroutine(CloseGame());
+        if(!string.IsNullOrEmpty(gameSession.session_id)){
+            StartCoroutine(CloseGame());
+        }
     }
 
     private IEnumerator CloseGame()
@@ -172,6 +174,20 @@ public class API : MonoBehaviour {
         using (UnityWebRequest www = UnityWebRequest.Delete(baseUrl + "/game/" + gameSession.session_id))
         {
             yield return www.SendWebRequest();
+
+        }
+    }
+
+    private void OnDestroy() {
+        if(!string.IsNullOrEmpty(gameSession.session_id)){
+            using (UnityWebRequest www = UnityWebRequest.Delete(baseUrl + "/game/" + gameSession.session_id))
+            {
+                www.SendWebRequest();
+
+                while(!www.isDone && !www.isNetworkError){
+
+                }
+            }
         }
     }
 }
