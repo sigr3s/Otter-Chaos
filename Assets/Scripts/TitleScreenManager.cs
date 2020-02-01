@@ -20,6 +20,7 @@ public class TitleScreenManager : MonoBehaviour
 
     public void OnStartButtonPressed()
     {
+        SoundManager.instance.PlayGameStart();
         Invoke("LoadSceneGame", 2.2f);
     }
 

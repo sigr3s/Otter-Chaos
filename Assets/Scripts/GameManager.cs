@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator PostRound(Action OnPostRoundComplete){
         Debug.Log("Start post round");
-
+        SoundManager.instance.PlayEndRound();
         yield return new WaitForSeconds(3);
 
         OnPostRoundComplete();
@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator EndGame(FactoryLine factory){
         Debug.Log("End game!");
+        SoundManager.instance.PlayEndRound();
         winnerColorImage.color = factory.color;
         API.instance.EndGame();
         endGameBox.SetActive(true);
