@@ -74,9 +74,9 @@ public class TwitchPlayer : MonoBehaviour {
         //TODO: Color y nombre del player
     }
 
-    public void Lose(){
+    public void Loose(){
         commandDisplay.Display(commands.hate);
-        animator.SetTrigger("lose");
+        animator.SetTrigger("loose");
     }
 
     public void Win()

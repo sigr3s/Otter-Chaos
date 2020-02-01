@@ -255,7 +255,7 @@ public class FactoryLine : MonoBehaviour {
                 player.Win();
             }
             else{
-                player.Lose();
+                player.Loose();
             }
         }
     }
