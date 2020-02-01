@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
         if(secondsSinceLastRequest > secondsBetweenRequests){
             secondsSinceLastRequest = 0f;
 
-            API.instance.GetFrame(lastTimestamp, OnSuccess);
+            API.instance.GetFrame(lastTimestamp, ProcessFrame);
         }
     }
 
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
 
         foreach(FactoryLine fl in factoryLines){
 
-            if(line == null || fl.playerCount < line.playerCount){
+            if(line == null || fl.GetPlayerCount() < line.GetPlayerCount()){
                 line = fl;
             }
         }
@@ -102,13 +103,15 @@ public class GameManager : MonoBehaviour
     private IEnumerator EndGame(){
         Debug.Log("End game!");
 
-        yield return null;
+        yield return new WaitForSeconds(10f);
+
+        SceneManager.LoadScene(0);
     }
 
 #endregion
 
 #region Callbacks
-    private void OnSuccess(DataFrame dataFrame)
+    private void ProcessFrame(DataFrame dataFrame)
     {
         foreach(TwitchPlayerModel newPlayer in dataFrame.new_players){
             // spawn players
@@ -121,6 +124,11 @@ public class GameManager : MonoBehaviour
 
             FactoryLine asignedLine = GetLineForNewUser();
             TwitchPlayer player = asignedLine.SpawnPlayer(playerPrefab);
+
+            if(player == null){
+                Debug.LogWarning("Max players!");
+                continue;
+            }
 
             player.SetData(newPlayer, asignedLine);
             players.Add(newPlayer.id, player);
@@ -196,6 +204,6 @@ public class GameManager : MonoBehaviour
         currentRound ++;
         StartCoroutine(PreRound(OnPreRoundComplete));
     }
-    
-    #endregion
+
+#endregion
 }

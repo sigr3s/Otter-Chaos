@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   join: 
   actions:
-  - actionName: 
-    image: {fileID: 0}
-  - actionName: 
-    image: {fileID: 0}
-  - actionName: 
-    image: {fileID: 0}
-  - actionName: 
-    image: {fileID: 0}
+  - actionName: paint
+    image: {fileID: 21300000, guid: dd5ae59937e398047bcb96c0d5856375, type: 3}
+  - actionName: tape
+    image: {fileID: 21300000, guid: 8355e093301b2f64e9dcb171ea8db5ba, type: 3}
+  - actionName: fish
+    image: {fileID: 21300000, guid: 50f1a954755b49e488009679c7254957, type: 3}
+  - actionName: shell
+    image: {fileID: 21300000, guid: 37cc3b4359f29a44893e7e54781a424b, type: 3}

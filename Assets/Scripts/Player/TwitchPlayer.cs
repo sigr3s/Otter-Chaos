@@ -14,8 +14,14 @@ public class TwitchPlayer : MonoBehaviour {
 
     public void SetData(TwitchPlayerModel newPlayer, FactoryLine asignedLine)
     {
+        if(this.asignedLine != null){
+            this.asignedLine.Unregister(this);
+        }
+
         this.asignedLine = asignedLine;
         this.playerData = newPlayer;
+
+        this.asignedLine.RegisterPlayer(this);
 
         //TODO: Color y nombre del player
     }

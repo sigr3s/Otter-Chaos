@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FactoryLine : MonoBehaviour {
     public float animationSpeed = 0.5f;
-    public float frameTime = 10f;
     public List<Transform> playerSlots;
+    public List<CommandDisplay> displays;
     [SerializeField] Animator animator = default;
     public ResultMode resultMode = ResultMode.Democracy;
 
@@ -14,15 +14,12 @@ public class FactoryLine : MonoBehaviour {
     public int[] sequence;
     public int[] result;
     public int[] votes;
-
     public int wins = 0;
-    public int playerCount;
 
     private Commands commands;
     private Action<FactoryLine> OnComplete;
     private Dictionary<string, int> actions = new Dictionary<string, int>();
     [SerializeField] private List<TwitchPlayer> players = new List<TwitchPlayer>();
-    [SerializeField] private float currentTime = 0f;
     [SerializeField] private int currentFrame = 0;
 
 
@@ -35,7 +32,6 @@ public class FactoryLine : MonoBehaviour {
         this.sequence = sequence;
         this.OnComplete = OnComplete;
         this.commands = commands;
-        currentTime = 0f;
         currentFrame = 0;
         result = new int[sequence.Length];
         votes = new int[commands.actions.Count];
@@ -50,27 +46,11 @@ public class FactoryLine : MonoBehaviour {
         animator.speed = 0;
     }
 
-    public void AddPlayerCommand(string playerId, int command)
-    {
-        if(running){
-            if(actions.ContainsKey(playerId)){
-                int old = actions[playerId];
-                actions[playerId] = command;
-
-                votes[old] -= 1;
-                votes[command] += 1;
-            }
-            else{
-                actions.Add(playerId, command);
-                votes[command] += 1;
-            }
-        }
-    }
-
     private void CheckFrame()
     {
         int res = GetPlayersResult();
         result[currentFrame] = res;
+        displays[currentFrame].Display(commands.actions[res].image);
 
         if(currentFrame == sequence.Length - 1){
             currentFrame = 0;
@@ -78,7 +58,6 @@ public class FactoryLine : MonoBehaviour {
         else{
             currentFrame++;
         }
-
     }
 
     private void CheckResults(){
@@ -91,6 +70,23 @@ public class FactoryLine : MonoBehaviour {
         if(correct){
             animator.speed = 0;
             Win();
+        }
+    }
+
+    [ContextMenu("Win")]
+    public void Win(){
+        OnComplete(this);
+    }
+
+#region Player
+    public TwitchPlayer SpawnPlayer(TwitchPlayer playerPrefab)
+    {
+        if(players.Count < playerSlots.Count){
+            TwitchPlayer player = Instantiate(playerPrefab, playerSlots[players.Count].position, Quaternion.identity);
+            return player;
+        }
+        else{
+            return null;
         }
     }
 
@@ -123,19 +119,40 @@ public class FactoryLine : MonoBehaviour {
         return result;
     }
 
-    public TwitchPlayer SpawnPlayer(TwitchPlayer playerPrefab)
+    public void AddPlayerCommand(string playerId, int command)
     {
-        TwitchPlayer player = Instantiate(playerPrefab, playerSlots[playerCount].position, Quaternion.identity);
-        players.Add(player);
-        playerCount++;
-        return player;
+        if(running){
+            if(actions.ContainsKey(playerId)){
+                int old = actions[playerId];
+                actions[playerId] = command;
+
+                votes[old] -= 1;
+                votes[command] += 1;
+            }
+            else{
+                actions.Add(playerId, command);
+                votes[command] += 1;
+            }
+        }
     }
 
-
-    [ContextMenu("Win")]
-    public void Win(){
-        OnComplete(this);
+    public void Unregister(TwitchPlayer twitchPlayer)
+    {
+        if(players.Contains(twitchPlayer)){
+            players.Remove(twitchPlayer);
+        }
     }
+
+    public void RegisterPlayer(TwitchPlayer twitchPlayer)
+    {
+        players.Add(twitchPlayer);
+    }
+
+    public int GetPlayerCount()
+    {
+        return players.Count;
+    }
+#endregion
 }
 
 public enum ResultMode{
