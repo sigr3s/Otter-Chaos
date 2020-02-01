@@ -50,7 +50,9 @@ MonoBehaviour:
   bgMusic: {fileID: 8300000, guid: 594918c80550ca94b9975f03fe75d73c, type: 3}
   dingding: {fileID: 8300000, guid: 96f8effbf46369248856d963fe5d0ba8, type: 3}
   gameStart: {fileID: 8300000, guid: 60baae20a32c5d445af5e26ff39c2b15, type: 3}
+  roundStart: {fileID: 8300000, guid: 1689db79ed2bcc249b6dc50a7f21f78d, type: 3}
   error: {fileID: 8300000, guid: 0c9b3996e09e1374fa408babc1547ffa, type: 3}
+  ui_beep: {fileID: 8300000, guid: 43c6a678d8d189942a3e1709f3e14540, type: 3}
 --- !u!82 &2998662512900085765
 AudioSource:
   m_ObjectHideFlags: 0

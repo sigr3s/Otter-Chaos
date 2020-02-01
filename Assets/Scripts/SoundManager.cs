@@ -16,8 +16,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip bgMusic = null;
     [SerializeField] private AudioClip dingding = null;
     [SerializeField] private AudioClip gameStart = null;
+    [SerializeField] private AudioClip roundStart = null;
     [SerializeField] private AudioClip error = null;
-
+    [SerializeField] private AudioClip ui_beep = null;
 
     private void Awake()
     {
@@ -54,16 +55,26 @@ public class SoundManager : MonoBehaviour
 
     public void PlayGameStart()
     {
-        musicAudioSource.PlayOneShot(gameStart);
+        sfxAudioSource.PlayOneShot(gameStart);
+    }
+
+    public void PlayRoundStart()
+    {
+        sfxAudioSource.PlayOneShot(roundStart);
     }
 
     public void PlayEndRound()
     {
-        musicAudioSource.PlayOneShot(dingding);
+        sfxAudioSource.PlayOneShot(dingding);
     }
 
-    public void PlayeError()
+    public void PlayError()
     {
-        musicAudioSource.PlayOneShot(error);
+        sfxAudioSource.PlayOneShot(error);
+    }
+
+    public void PlayCountdownBeep()
+    {
+        sfxAudioSource.PlayOneShot(ui_beep);
     }
 }

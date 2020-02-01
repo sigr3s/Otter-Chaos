@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
         for (int i = (int)joinPhaseDuration; i >= 0; i--)
         {
             timerText.text = i+"";
+            SoundManager.instance.PlayCountdownBeep();
             yield return new WaitForSeconds(1.0f);
         }
         messageBox.SetActive(false);
@@ -234,6 +235,7 @@ public class GameManager : MonoBehaviour
     {
         if(players.Count > 1){
             gameStatus = GameStatus.PreRound;
+            SoundManager.instance.PlayRoundStart();
             StartCoroutine(PreRound(OnPreRoundComplete));
         }
         else{

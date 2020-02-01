@@ -176,7 +176,7 @@ public class FactoryLine : MonoBehaviour {
         }
         else
         {
-            SoundManager.instance.PlayeError();
+            SoundManager.instance.PlayError();
         }
     }
 
