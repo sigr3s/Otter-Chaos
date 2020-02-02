@@ -908,12 +908,12 @@ MonoBehaviour:
   gameSession:
     error_code: 
     session_id: 
-  player1: sigr3s
-  player2: drixide
+  player1: sigr3s_dev01
+  player2: drixide_dev02
   debugDataFrame:
     error_code: 
     new_players: []
-    commands: []
+    player_commands: []
 --- !u!114 &1202530221
 MonoBehaviour:
   m_ObjectHideFlags: 0

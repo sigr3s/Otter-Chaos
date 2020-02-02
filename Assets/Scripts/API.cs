@@ -33,6 +33,12 @@ public class API : MonoBehaviour {
             joinDataFrame = new DataFrame();
             joinDataFrame.new_players = new List<TwitchPlayerModel>();
             joinDataFrame.new_players.Add(new TwitchPlayerModel(player1, "#b975f0"));
+            sendJoin = true;
+        }
+
+        if(Input.GetKeyDown(KeyCode.K)){
+            joinDataFrame = new DataFrame();
+            joinDataFrame.new_players = new List<TwitchPlayerModel>();
             joinDataFrame.new_players.Add(new TwitchPlayerModel(player2, "#7bd12a"));
             sendJoin = true;
         }
