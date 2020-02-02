@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class TitleScreenManager : MonoBehaviour
 {
@@ -36,7 +39,11 @@ public class TitleScreenManager : MonoBehaviour
 
     public void OnCloseButtonPressed()
     {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     public void LoadSceneGame()
