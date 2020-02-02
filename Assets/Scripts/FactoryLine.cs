@@ -68,6 +68,10 @@ public class FactoryLine : MonoBehaviour {
             Material m = l.GetComponent<MeshRenderer>().material;
             m.color = disabled;
         }
+
+        if(PlayerPrefs.HasKey("Speed")){
+            animationSpeed = PlayerPrefs.GetFloat("Speed");
+        }
     }
 
     public void StartLine(int[] sequence, Action<FactoryLine> OnComplete, Commands commands, int propIndex){

@@ -58,7 +58,7 @@ Material:
     - _ReceiveShadows: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 6.25
+    - _Speed: 2.5
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1

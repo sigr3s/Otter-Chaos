@@ -13,6 +13,11 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] private Button startGame = null;
     [SerializeField] private Button closeGame = null;
     [SerializeField] private InputField twitchChannel = null;
+
+    [SerializeField] private Toggle slow;
+    [SerializeField] private Toggle mid;
+    [SerializeField] private Toggle fast;
+
     private Camera mainCamera;
 
 
@@ -31,6 +36,14 @@ public class TitleScreenManager : MonoBehaviour
         }
 
         mainCamera = Camera.main;
+
+        if(PlayerPrefs.HasKey("Speed")){
+            float speed = PlayerPrefs.GetFloat("Speed");
+
+            slow.isOn = speed <= 0.2;
+            mid.isOn = speed <= 0.3 && !slow.isOn;
+            fast.isOn = speed >= 0.3;
+        }
     }
 
     void Update()
@@ -69,6 +82,17 @@ public class TitleScreenManager : MonoBehaviour
     public void OnStartButtonPressed()
     {
         PlayerPrefs.SetString("TwitchChannel", twitchChannel.text);
+
+        if(slow.isOn){
+            PlayerPrefs.SetFloat("Speed", 0.1f);
+        }
+        else if(mid.isOn){
+            PlayerPrefs.SetFloat("Speed", 0.25f);
+        }
+        else{
+            PlayerPrefs.SetFloat("Speed", 0.5f);
+        }
+
         PlayerPrefs.Save();
     
         SoundManager.instance.PlayGameStart();
