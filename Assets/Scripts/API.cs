@@ -88,7 +88,7 @@ public class API : MonoBehaviour {
             }
             else
             {
-                Debug.Log("Received: " + webRequest.downloadHandler.text);
+                //Debug.Log("Received: " + webRequest.downloadHandler.text);
 
                 T res = (T) JsonUtility.FromJson(webRequest.downloadHandler.text, typeof(T));
 
