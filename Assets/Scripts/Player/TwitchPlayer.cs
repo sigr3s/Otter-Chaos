@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ public class TwitchPlayer : MonoBehaviour {
 
     [Header("Debug")]
     public FactoryLine asignedLine;
-    private Commands commands;
+    [SerializeField] private Commands commands;
+    public bool isPettinng = false;
 
     private void Awake() {
         Color c = new Color(
@@ -27,7 +29,7 @@ public class TwitchPlayer : MonoBehaviour {
         Material m = arpon.GetComponent<MeshRenderer>().material;
         m.color = c;
 
-        int prop = UnityEngine.Random.Range(0, hats.Count * 2);
+        int prop = UnityEngine.Random.Range(0, (int) (hats.Count * 1.25f) );
 
         if(prop >= hats.Count){
 
@@ -81,13 +83,27 @@ public class TwitchPlayer : MonoBehaviour {
 
     public void Win()
     {
-        commandDisplay.Display(commands.love);
+        commandDisplay?.Display(commands.love);
         animator.SetTrigger("win");
     }
 
     public void ClearVote()
     {
-        commandDisplay.Display(playerData.id.Substring(0,1));
+        commandDisplay?.Display(playerData.id.Substring(0,1));
         animator.SetTrigger("reset");
+    }
+
+    public void Pet(){
+        commandDisplay?.Display(commands.love);
+        animator.SetTrigger("win");
+        isPettinng = true;
+        StartCoroutine(EndPet());
+    }
+
+    public IEnumerator EndPet(){
+        yield return new WaitForSeconds(3.5f);
+        commandDisplay?.Display(commands.actions[UnityEngine.Random.Range(0, commands.actions.Count)].image);
+        animator.SetTrigger("reset");
+        isPettinng = false;
     }
 }
