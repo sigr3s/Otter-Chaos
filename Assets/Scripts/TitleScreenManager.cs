@@ -11,7 +11,7 @@ public class TitleScreenManager : MonoBehaviour
 {
     [SerializeField] private Button startGame = null;
     [SerializeField] private Button closeGame = null;
-    [SerializeField] private InputField twitchChannel;
+    [SerializeField] private InputField twitchChannel = null;
 
     void Start()
     {
