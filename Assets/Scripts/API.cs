@@ -37,37 +37,36 @@ public class API : MonoBehaviour {
             sendJoin = true;
         }
 
-        if(debugDataFrame.commands == null){
-            debugDataFrame.commands = new List<TwitchCommand>();
+        if(debugDataFrame.player_commands == null){
+            debugDataFrame.player_commands = new List<TwitchCommand>();
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha1)){
-            debugDataFrame.commands.Add(new TwitchCommand(player1, 0));
+            debugDataFrame.player_commands.Add(new TwitchCommand(player1, 0));
         }
         if(Input.GetKeyDown(KeyCode.Alpha2)){
-            debugDataFrame.commands.Add(new TwitchCommand(player1, 1));
+            debugDataFrame.player_commands.Add(new TwitchCommand(player1, 1));
         }
         if(Input.GetKeyDown(KeyCode.Alpha3)){
-            debugDataFrame.commands.Add(new TwitchCommand(player1, 2));
+            debugDataFrame.player_commands.Add(new TwitchCommand(player1, 2));
         }
         if(Input.GetKeyDown(KeyCode.Alpha4)){
-            debugDataFrame.commands.Add(new TwitchCommand(player1, 3));
+            debugDataFrame.player_commands.Add(new TwitchCommand(player1, 3));
         }
 
         if(Input.GetKeyDown(KeyCode.V)){
-            debugDataFrame.commands.Add(new TwitchCommand(player2, 0));
+            debugDataFrame.player_commands.Add(new TwitchCommand(player2, 0));
         }
         if(Input.GetKeyDown(KeyCode.B)){
-            debugDataFrame.commands.Add(new TwitchCommand(player2, 1));
+            debugDataFrame.player_commands.Add(new TwitchCommand(player2, 1));
         }
         if(Input.GetKeyDown(KeyCode.N)){
-            debugDataFrame.commands.Add(new TwitchCommand(player2, 2));
+            debugDataFrame.player_commands.Add(new TwitchCommand(player2, 2));
         }
         if(Input.GetKeyDown(KeyCode.M)){
-            debugDataFrame.commands.Add(new TwitchCommand(player2, 3));
+            debugDataFrame.player_commands.Add(new TwitchCommand(player2, 3));
         }
     }
-
 
     private IEnumerator SendRequest<T>(string endpoint, Action<T> Success, Action Failure){
         using (UnityWebRequest webRequest = UnityWebRequest.Get(baseUrl + "/" + endpoint))
@@ -110,11 +109,11 @@ public class API : MonoBehaviour {
 
     }
 
-    private void StartError(){
+    private void StartError(string error){
         Debug.LogError("Critical error");
     }
 
-    private IEnumerator StartGameSession(string jsonData, Action<GameSession> callback, Action error){
+    public IEnumerator StartGameSession(string jsonData, Action<GameSession> callback, Action<string> error){
         using (UnityWebRequest www = UnityWebRequest.Put(baseUrl + "/game", jsonData))
         {
             www.SetRequestHeader("Content-Type", "application/json");
@@ -125,31 +124,29 @@ public class API : MonoBehaviour {
             {
                 Debug.Log(www.url);
                 Debug.Log(www.error);
-                error.Invoke();
+                error.Invoke(www.error);
             }
             else
             {
                 Debug.Log(www.downloadHandler.text);
-
                 callback.Invoke(JsonUtility.FromJson<GameSession>(www.downloadHandler.text));
             }
         }
     }
 
     public void GetFrame(Action<DataFrame> OnSuccess){
-        /*
         if(!string.IsNullOrEmpty(gameSession.session_id)){
-            StartCoroutine(SendRequest<DataFrame>("/game/" + gameSession.session_id, OnSuccess, () =>{
+            StartCoroutine(SendRequest<DataFrame>("game/" + gameSession.session_id, OnSuccess, () =>{
                 //TODO: Handle this
             }));
         }
         else{
             //Debug.LogWarning("Session not started")
-        }*/
+        }
     }
 
     public void GetLocalFrame(Action<DataFrame> OnSuccess){
-        if(debugDataFrame.commands != null && debugDataFrame.commands.Count > 0){
+        if(debugDataFrame.player_commands != null && debugDataFrame.player_commands.Count > 0){
             DataFrame df = debugDataFrame;
             debugDataFrame = new DataFrame();
             OnSuccess(df);
@@ -187,6 +184,61 @@ public class API : MonoBehaviour {
                 while(!www.isDone && !www.isNetworkError){
 
                 }
+            }
+        }
+    }
+
+
+    private string userID = "";
+
+    public IEnumerator JoinWebController(WebControllerJoinRequest wbjrq, Action OnSuccess, Action OnError){
+
+        using (UnityWebRequest www = UnityWebRequest.Post(baseUrl + "/join", JsonUtility.ToJson(wbjrq)))
+        {
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.url);
+                Debug.Log(www.error);
+                OnError.Invoke();
+            }
+            else
+            {
+                gameSession = new GameSession();
+                gameSession.session_id = wbjrq.session_id;
+                userID = wbjrq.user_id;
+
+                Debug.Log(www.downloadHandler.text);
+                OnSuccess.Invoke();
+            }
+        }
+    }
+
+
+    public void SendWebCommand(int commandID)
+    {
+        StartCoroutine(DoSendWebCommand(new WebCommand(gameSession.session_id, userID, commandID)));
+    }
+
+    private IEnumerator DoSendWebCommand(WebCommand command)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Post(baseUrl + "/command", JsonUtility.ToJson(command)))
+        {
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.url);
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
             }
         }
     }

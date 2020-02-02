@@ -197,6 +197,8 @@ public class GameManager : MonoBehaviour
 #region Callbacks
     private void ProcessFrame(DataFrame dataFrame)
     {
+        if(dataFrame == null) return;
+
         if(dataFrame.new_players != null){
             foreach(TwitchPlayerModel newPlayer in dataFrame.new_players){
             // spawn players
@@ -220,11 +222,15 @@ public class GameManager : MonoBehaviour
         }
 
         }
-        if(dataFrame.commands != null){
-            foreach(var action in dataFrame.commands){
+        
+        if(dataFrame.player_commands != null){
+            foreach(var action in dataFrame.player_commands){
 
                 if(players.ContainsKey(action.player_id)){
                     players[action.player_id].ExecuteCommand(action.command);
+                }
+                else{
+                    Debug.Log("Error with player command! " + action.player_id);
                 }
 
             }
